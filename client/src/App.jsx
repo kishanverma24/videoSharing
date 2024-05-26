@@ -45,7 +45,7 @@ function App() {
                   path="/signin"
                   element={currentUser ? <Home /> : <SignIn />}
                 />
-                <Route path="/video/videoid" element={<Video />} />
+                <Route path="/video/:videoid" element={<Video />} />
               </Routes>
             </Wrapper>
           </Main>

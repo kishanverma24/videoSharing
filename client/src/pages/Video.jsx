@@ -8,7 +8,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 // import { format } from "timeago.js";
@@ -118,16 +118,15 @@ const VideoFrame = styled.video`
 const Video = () => {
   const dispatch = useDispatch();
 
-  const path = useLocation().pathname.split("/")[2];
-
   const [channel, setChannel] = useState({});
   const [currentVideo, setCurrentvideo] = useState({});
+  const { videoid } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const videoRes = await fetch(
-          `http://localhost:8800/api/videos/find/${path}`
+          `http://localhost:8800/api/videos/find/${videoid}`
         );
         const videoResdata = await videoRes.json();
         setCurrentvideo(videoResdata);
@@ -136,7 +135,7 @@ const Video = () => {
       } catch (err) {}
     };
     fetchData();
-  }, [path, dispatch]);
+  }, [videoid, dispatch]);
 
   const handleLike = () => {
     console.log("liked the video");
@@ -196,7 +195,6 @@ const Video = () => {
               <Description>{currentVideo.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-         
         </Channel>
         <Hr />
         {/* <Comments videoid={} /> */}
