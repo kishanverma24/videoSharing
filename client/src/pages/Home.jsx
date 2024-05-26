@@ -61,7 +61,7 @@ const Home = ({ type }) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const response = await fetch("http://localhost:8800/api/video/random");
+      const response = await fetch(`http://localhost:8800/api/video/${type}`);
       const data = await response.json();
       setVideos(data);
     };

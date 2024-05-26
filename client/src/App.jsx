@@ -35,19 +35,17 @@ function App() {
             <Navbar />
             <Wrapper>
               <Routes>
-                <Route path="/">
-                  <Route index element={<Home type="random" />} />
-                  <Route path="trends" element={<Home type="trend" />} />
-                  <Route path="subscriptions" element={<Home type="sub" />} />
-                  <Route path="search" element={<Search />} />
-                  <Route
-                    path="signin"
-                    element={currentUser ? <Home /> : <SignIn />}
-                  />
-                  <Route path="video">
-                    <Route path=":videoid" element={<Video />} />
-                  </Route>
-                </Route>
+                <Route exact path="/" element={<Home type="random" />} />
+
+                <Route path="/trends" element={<Home type="trend" />} />
+                <Route path="/subscriptions" element={<Home type="sub" />} />
+                <Route path="/search" element={<Search />} />
+
+                <Route
+                  path="/signin"
+                  element={currentUser ? <Home /> : <SignIn />}
+                />
+                <Route path="/video/videoid" element={<Video />} />
               </Routes>
             </Wrapper>
           </Main>

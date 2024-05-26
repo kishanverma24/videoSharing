@@ -91,13 +91,16 @@ const Menu = ({ darkMode, setDarkMode }) => {
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
             <Img src={LamaTube} />
-            LamaTube
+            VideoShare
           </Logo>
         </Link>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
+
         <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
             <ExploreOutlinedIcon />
@@ -123,7 +126,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           History
         </Item>
         <Hr />
-        {!currentUser &&
+        {!currentUser && (
           <>
             <Login>
               Sign in to like videos, comment, and subscribe.
@@ -136,7 +139,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
             </Login>
             <Hr />
           </>
-        }
+        )}
         <Title>BEST OF LAMATUBE</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
