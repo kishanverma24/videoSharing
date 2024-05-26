@@ -126,7 +126,7 @@ const Video = () => {
     const fetchData = async () => {
       try {
         const videoRes = await fetch(
-          `http://localhost:8800/api/videos/find/${videoid}`
+          `http://localhost:8800/api/video/find/${videoid}`
         );
         const videoResdata = await videoRes.json();
         setCurrentvideo(videoResdata);
