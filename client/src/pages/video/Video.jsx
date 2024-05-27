@@ -5,7 +5,7 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import Comments from "../../components/Comments.jsx";
+import Comments from "../../components/comments/Comments.jsx";
 import { useParams } from "react-router-dom";
 import Recommendation from "../../components/Recommendation.jsx";
 import {
@@ -67,7 +67,7 @@ const Video = () => {
       <Content>
         <VideoWrapper>
           <iframe
-            width="75%"
+            width="100%"
             height="400"
             src="https://www.youtube.com/embed/NoxxY2UX9Hg?si=IfjXdeoe4HMWJ8x"
             title="YouTube video player"
@@ -119,7 +119,7 @@ const Video = () => {
         <Hr />
         <Comments videoid={videoid} />
       </Content>
-      {/* <Recommendation tags={currentVideo} /> */}
+      {/* <Recommendation tags={currentVideo.tags} /> */}
     </Container>
   );
 };

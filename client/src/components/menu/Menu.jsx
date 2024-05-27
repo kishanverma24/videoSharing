@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
-import LamaTube from "../img/logo.png";
+import VideoShare from "../../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
@@ -13,70 +12,18 @@ import MovieOutlinedIcon from "@mui/icons-material/MovieOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
-
-const Container = styled.div`
-  flex: 1;
-  background-color: ${({ theme }) => theme.bgLighter};
-  height: 100vh;
-  color: ${({ theme }) => theme.text};
-  font-size: 14px;
-  position: sticky;
-  top: 0;
-`;
-const Wrapper = styled.div`
-  padding: 18px 26px;
-`;
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: bold;
-  margin-bottom: 25px;
-`;
-
-const Img = styled.img`
-  height: 25px;
-`;
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  cursor: pointer;
-  padding: 7.5px 0px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.soft};
-  }
-`;
-
-const Hr = styled.hr`
-  margin: 15px 0px;
-  border: 0.5px solid ${({ theme }) => theme.soft};
-`;
-
-const Login = styled.div``;
-const Button = styled.button`
-  padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid #3ea6ff;
-  color: #3ea6ff;
-  border-radius: 3px;
-  font-weight: 500;
-  margin-top: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-const Title = styled.h2`
-  font-size: 14px;
-  font-weight: 500;
-  color: #aaaaaa;
-  margin-bottom: 20px;
-`;
+import UserContext from "../../context/UserContext";
+import {
+  Container,
+  Wrapper,
+  Logo,
+  Img,
+  Item,
+  Hr,
+  Login,
+  Button,
+  Title,
+} from "./Menu.css.jsx";
 
 const Menu = ({ darkMode, setDarkMode }) => {
   const navigate = useNavigate();
@@ -91,7 +38,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
       const data = await response.json();
       if (data.success == true) {
         setUser("");
-        localStorage.clear()
+        localStorage.clear();
         navigate("/");
       }
     } catch (error) {
@@ -103,7 +50,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
       <Wrapper>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
-            <Img src={LamaTube} />
+            <Img src={VideoShare} />
             VideoShare
           </Logo>
         </Link>
@@ -183,6 +130,8 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 color: "white",
                 border: "none",
                 width: "100%",
+                height:"30px",
+                cursor:"pointer"
               }}
             >
               Logout

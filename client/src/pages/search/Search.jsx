@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Card from "../../components/Card";
+import Card from "../../components/card/Card";
 
 const Container = styled.div`
   display: flex;

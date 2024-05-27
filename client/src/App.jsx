@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import Menu from "./components/Menu";
-import Navbar from "./components/Navbar";
+import Menu from "./components/menu/Menu";
+import Navbar from "./components/navbar/Navbar";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home/";
