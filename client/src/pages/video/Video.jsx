@@ -1,119 +1,36 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import Comments from "../components/Comments";
+import Comments from "../../components/Comments.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { dislike, fetchSuccess, like } from "../redux/videoSlice";
-// import { format } from "timeago.js";
-import { subscription } from "../redux/userSlice";
-import Recommendation from "../components/Recommendation";
-
-const Container = styled.div`
-  display: flex;
-  gap: 24px;
-`;
-
-const Content = styled.div`
-  flex: 5;
-`;
-const VideoWrapper = styled.div``;
-
-const Title = styled.h1`
-  font-size: 18px;
-  font-weight: 400;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: ${({ theme }) => theme.text};
-`;
-
-const Details = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Info = styled.span`
-  color: ${({ theme }) => theme.textSoft};
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  gap: 20px;
-  color: ${({ theme }) => theme.text};
-`;
-
-const Button = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-`;
-
-const Hr = styled.hr`
-  margin: 15px 0px;
-  border: 0.5px solid ${({ theme }) => theme.soft};
-`;
-
-const Channel = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ChannelInfo = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const Image = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`;
-
-const ChannelDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: ${({ theme }) => theme.text};
-`;
-
-const ChannelName = styled.span`
-  font-weight: 500;
-`;
-
-const ChannelCounter = styled.span`
-  margin-top: 5px;
-  margin-bottom: 20px;
-  color: ${({ theme }) => theme.textSoft};
-  font-size: 12px;
-`;
-
-const Description = styled.p`
-  font-size: 14px;
-`;
-
-const Subscribe = styled.button`
-  background-color: #cc1a00;
-  font-weight: 500;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  height: max-content;
-  padding: 10px 20px;
-  cursor: pointer;
-`;
-
-const VideoFrame = styled.video`
-  max-height: 720px;
-  width: 100%;
-  object-fit: cover;
-`;
+import {  fetchSuccess } from "../../redux/videoSlice.js";
+import Recommendation from "../../components/Recommendation.jsx";
+import {
+  Container,
+  Content,
+  VideoWrapper,
+  Title,
+  Details,
+  Info,
+  Buttons,
+  Button,
+  Hr,
+  Channel,
+  ChannelInfo,
+  Image,
+  ChannelDetail,
+  ChannelName,
+  ChannelCounter,
+  Description,
+  Subscribe,
+  VideoFrame,
+} from "./Video.css.jsx";
 
 const Video = () => {
   const dispatch = useDispatch();
@@ -152,12 +69,19 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame
-            src="https://youtu.be/pKJ4GGyDgJo?si=lm_Zi_P1wRIvfE1n"
-            controls
-          />
+          <iframe
+            width="75%"
+            height="400"
+            src="https://www.youtube.com/embed/NoxxY2UX9Hg?si=IfjXdeoe4HMWJ8x"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <h1>hello there</h1>
+        <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>{currentVideo.views} views •</Info>
           <Buttons>

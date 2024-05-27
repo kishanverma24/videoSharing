@@ -4,10 +4,10 @@ import Menu from "./components/Menu";
 import Navbar from "./components/Navbar";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Video from "./pages/Video";
-import SignIn from "./pages/Signin";
-import Search from "./pages/Search";
+import Home from "./pages/home/Home/";
+import Video from "./pages/video/Video";
+import Auth from "./pages/auth/Auth";
+import Search from "./pages/search/Search";
 import { useSelector } from "react-redux";
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ function App() {
 
                 <Route
                   path="/signin"
-                  element={currentUser ? <Home /> : <SignIn />}
+                  element={currentUser ? <Home /> : <Auth />}
                 />
                 <Route path="/video/:videoid" element={<Video />} />
               </Routes>
