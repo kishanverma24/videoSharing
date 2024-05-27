@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import LamaTube from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
@@ -10,15 +10,11 @@ import LibraryMusicOutlinedIcon from "@mui/icons-material/LibraryMusicOutlined";
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined";
 import SportsBasketballOutlinedIcon from "@mui/icons-material/SportsBasketballOutlined";
 import MovieOutlinedIcon from "@mui/icons-material/MovieOutlined";
-import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../context/UserContext";
+
 const Container = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.bgLighter};
@@ -83,8 +79,25 @@ const Title = styled.h2`
 `;
 
 const Menu = ({ darkMode, setDarkMode }) => {
-  const { currentUser } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  const handleLogout = async (e) => {
+    try {
+      console.log("button clicked");
+      const response = await fetch("http://localhost:8800/api/auth/signout", {
+        method: "POST",
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (data.success == true) {
+        setUser("");
+        localStorage.clear()
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Client Error", error);
+    }
+  };
   return (
     <Container>
       <Wrapper>
@@ -126,10 +139,10 @@ const Menu = ({ darkMode, setDarkMode }) => {
           History
         </Item>
         <Hr />
-        {!currentUser && (
+        {!user && (
           <>
             <Login>
-              Sign in to like videos, comment, and subscribe.
+              Sign in to Like,Comment and Subscribe.
               <Link to="signin" style={{ textDecoration: "none" }}>
                 <Button>
                   <AccountCircleOutlinedIcon />
@@ -140,7 +153,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
             <Hr />
           </>
         )}
-        <Title>BEST OF LAMATUBE</Title>
+        <Title>BEST OF VideoShare</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
           Music
@@ -157,31 +170,27 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <MovieOutlinedIcon />
           Movies
         </Item>
-        <Item>
-          <ArticleOutlinedIcon />
-          News
-        </Item>
-        <Item>
-          <LiveTvOutlinedIcon />
-          Live
-        </Item>
-        <Hr />
-        <Item>
-          <SettingsOutlinedIcon />
-          Settings
-        </Item>
-        <Item>
-          <FlagOutlinedIcon />
-          Report
-        </Item>
-        <Item>
-          <HelpOutlineOutlinedIcon />
-          Help
-        </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
           {darkMode ? "Light" : "Dark"} Mode
         </Item>
+        {user && (
+          <Item>
+            <button
+              onClick={handleLogout}
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                border: "none",
+                width: "100%",
+              }}
+            >
+              Logout
+            </button>
+          </Item>
+        )}
+
+        <Hr />
       </Wrapper>
     </Container>
   );

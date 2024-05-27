@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
-import { loginFailure, loginStart, loginSuccess } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext.js";
+
 import {
   Container,
   Wrapper,
   Title,
-  SubTitle,
   Input,
   Button,
   More,
   Links,
   Link,
 } from "./Auth.css.jsx";
+
 const Auth = () => {
   const [loginusername, setLoginsername] = useState("");
   const [username, setUsername] = useState("");
@@ -20,9 +21,8 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [userpassword, setUserpassword] = useState("");
   const [loginuserpassword, setLoginuserpassword] = useState("");
-  const dispatch = useDispatch();
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -47,6 +47,9 @@ const Auth = () => {
       }
 
       if (data.success == true) {
+        const token = data.token;
+        localStorage.setItem("token", token);
+        setUser(data.user);
         console.log(data);
         navigate("/");
       }

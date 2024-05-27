@@ -16,7 +16,10 @@ const Home = ({ type }) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const response = await fetch(`http://localhost:8800/api/video/${type}`);
+      const response = await fetch(`http://localhost:8800/api/video/${type}`, {
+        method: "GET",
+        credentials: "include", // Ensure cookies are sent with the request
+      });
       const data = await response.json();
       setVideos(data);
     };

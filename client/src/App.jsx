@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Menu from "./components/Menu";
 import Navbar from "./components/Navbar";
@@ -8,7 +8,7 @@ import Home from "./pages/home/Home/";
 import Video from "./pages/video/Video";
 import Auth from "./pages/auth/Auth";
 import Search from "./pages/search/Search";
-import { useSelector } from "react-redux";
+import UserContext from "../src/context/UserContext";
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-  const { currentUser } = useSelector((state) => state.user);
+  const { user } = useContext(UserContext);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -38,13 +38,13 @@ function App() {
                 <Route exact path="/" element={<Home type="random" />} />
 
                 <Route path="/trends" element={<Home type="trend" />} />
-                <Route path="/subscriptions" element={<Home type="sub" />} />
+                <Route
+                  path="/subscriptions"
+                  element={user ? <Home type="sub" /> : <Home type="random" />}
+                />
                 <Route path="/search" element={<Search />} />
 
-                <Route
-                  path="/signin"
-                  element={currentUser ? <Home /> : <Auth />}
-                />
+                <Route path="/signin" element={user ? <Home /> : <Auth />} />
                 <Route path="/video/:videoid" element={<Video />} />
               </Routes>
             </Wrapper>

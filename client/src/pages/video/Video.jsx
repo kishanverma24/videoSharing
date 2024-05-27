@@ -6,10 +6,7 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../../components/Comments.jsx";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import {  fetchSuccess } from "../../redux/videoSlice.js";
 import Recommendation from "../../components/Recommendation.jsx";
 import {
   Container,
@@ -33,8 +30,6 @@ import {
 } from "./Video.css.jsx";
 
 const Video = () => {
-  const dispatch = useDispatch();
-
   const [channel, setChannel] = useState({});
   const [currentVideo, setCurrentvideo] = useState({});
   const { videoid } = useParams();
@@ -46,13 +41,16 @@ const Video = () => {
           `http://localhost:8800/api/video/find/${videoid}`
         );
         const videoResdata = await videoRes.json();
-        setCurrentvideo(videoResdata);
-
-        dispatch(fetchSuccess(videoResdata));
-      } catch (err) {}
+        // console.log(videoResdata[0]);
+        if (videoResdata) {
+          setCurrentvideo(videoResdata[0]);
+        }
+      } catch (err) {
+        console.log("Error while fetching the video", err);
+      }
     };
     fetchData();
-  }, [videoid, dispatch]);
+  }, []);
 
   const handleLike = () => {
     console.log("liked the video");
@@ -64,7 +62,6 @@ const Video = () => {
     console.log("Disliked the video");
   };
   //TODO: DELETE VIDEO FUNCTIONALITY
-
   return (
     <Container>
       <Content>
@@ -80,10 +77,9 @@ const Video = () => {
             allowFullScreen
           ></iframe>
         </VideoWrapper>
-        <h1>hello there</h1>
-        <Title>{currentVideo?.title}</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>{currentVideo.views} views •</Info>
+          <h1>{currentVideo.views} views •</h1>
           <Buttons>
             <Button onClick={handleLike}>
               {currentVideo.likes?.includes(currentUser?.username) ? (
@@ -121,9 +117,9 @@ const Video = () => {
           </ChannelInfo>
         </Channel>
         <Hr />
-        {/* <Comments videoid={} /> */}
+        <Comments videoid={videoid} />
       </Content>
-      {/* <Recommendation tags={} /> */}
+      {/* <Recommendation tags={currentVideo} /> */}
     </Container>
   );
 };

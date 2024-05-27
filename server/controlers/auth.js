@@ -40,7 +40,7 @@ export const signin = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ username:loginusername });
+    const user = await User.findOne({ username: loginusername });
 
     if (!user) {
       return res
@@ -48,7 +48,10 @@ export const signin = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    const validPassword = await bcrypt.compare(loginuserpassword, user.password);
+    const validPassword = await bcrypt.compare(
+      loginuserpassword,
+      user.password
+    );
     if (!validPassword) {
       return res.status(401).json({
         message: "Invalid password",
@@ -66,5 +69,17 @@ export const signin = async (req, res) => {
   } catch (err) {
     console.error("Error while signing in:", err);
     res.status(500).json({ message: "Error while signing in", success: false });
+  }
+};
+export const signout = async (req, res) => {
+  try {
+    res.cookie("access_token", null, { httpOnly: true });
+
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Error while signing out:", err);
+    res
+      .status(500)
+      .json({ message: "Error while signing out", success: false });
   }
 };

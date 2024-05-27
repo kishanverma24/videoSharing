@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import UserContext from "../context/UserContext";
 
 const Container = styled.div`
   position: sticky;
@@ -42,7 +42,6 @@ const Input = styled.input`
   background-color: transparent;
   outline: none;
   color: ${({ theme }) => theme.text};
-
 `;
 
 const Button = styled.button`
@@ -74,10 +73,11 @@ const Avatar = styled.img`
 `;
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
-  const { currentUser } = useSelector((state) => state.user);
+  const { user } = useContext(UserContext);
+
   return (
     <>
       <Container>
@@ -87,13 +87,13 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={()=>navigate(`/search?q=${q}`)}/>
+            <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
           </Search>
-          {currentUser ? (
+          {user ? (
             <User>
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
-              <Avatar src={currentUser.img} />
-              {currentUser.username}
+              <Avatar src={user.img} />
+              {user.username}
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>

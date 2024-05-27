@@ -1,8 +1,7 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState,useContext } from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
+import UserContext from "../context/UserContext";
 
 const Container = styled.div``;
 
@@ -29,30 +28,36 @@ const Input = styled.input`
 `;
 
 const Comments = ({ videoid }) => {
-  const { currentUser } = useSelector((state) => state.user);
-
+  const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
-
+// console.log(videoid);
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8800/comments/${videoid}`
-        );
+          `http://localhost:8800/api/comments/${videoid}`, {
+            method: "GET",
+            credentials: "include",
+          });
+        // console.log(videoid);
         const data = await response.json();
+        console.log(data);
         setComments(data);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchComments();
-  }, [videoid]);
+  }, []);
 
   //TODO: ADD NEW COMMENT FUNCTIONALITY
 
   return (
     <Container>
       <NewComment>
-        <Avatar src={currentUser.img} />
+        <Avatar src={user.img} />
         <Input placeholder="Add a comment..." />
+        <button>Comment</button>
       </NewComment>
       {comments?.map((comment) => (
         <Comment key={comment.commentid} comment={comment} />
