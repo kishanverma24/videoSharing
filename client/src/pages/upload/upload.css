@@ -1,0 +1,39 @@
+.uploadcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.uploadcontainer h1{
+    color: chocolate;
+}
+
+
+.mainuploadcontainer {
+  background-color: teal;
+  height: 80vh;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+.mainuploadcontainer input{
+    height: 35px;
+    width: 50%;
+}
+.mainuploadcontainer button{
+    background-color: red ;
+    color:  white;
+    border: none;
+    height: 35px;
+    width: 50%;
+    cursor: pointer;
+}
+.mainuploadcontainer button:hover{
+    background-color: darkred;
+}
+

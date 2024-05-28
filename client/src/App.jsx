@@ -9,7 +9,7 @@ import Video from "./pages/video/Video";
 import Auth from "./pages/auth/Auth";
 import Search from "./pages/search/Search";
 import UserContext from "../src/context/UserContext";
-
+import Upload from "./pages/upload/Upload.jsx";
 const Container = styled.div`
   display: flex;
 `;
@@ -45,6 +45,7 @@ function App() {
                 <Route path="/search" element={<Search />} />
 
                 <Route path="/signin" element={user ? <Home /> : <Auth />} />
+                <Route path="/upload" element={user ? <Upload /> : <Home />} />
                 <Route path="/video/:videoid" element={<Video />} />
               </Routes>
             </Wrapper>

@@ -26,7 +26,6 @@ export const verifyToken = async (req, res, next) => {
 
     // Attach the user information to the request object
     req.username = user.username;
-console.log( req.username);
     // Proceed to the next middleware
     next();
   } catch (err) {

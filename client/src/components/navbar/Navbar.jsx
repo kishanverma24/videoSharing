@@ -33,7 +33,12 @@ const Navbar = () => {
           </Search>
           {user ? (
             <User>
-              <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+              <Link to="upload" style={{ textDecoration: "none" }}>
+                <Button>
+                  <VideoCallOutlinedIcon />
+                </Button>
+              </Link>
+
               <Avatar src={user.img} />
               {user.username}
             </User>
@@ -47,7 +52,6 @@ const Navbar = () => {
           )}
         </Wrapper>
       </Container>
-      {open && <Upload setOpen={setOpen} />}
     </>
   );
 };

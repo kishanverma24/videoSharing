@@ -61,6 +61,12 @@ const Video = () => {
   const handleSub = () => {
     console.log("Disliked the video");
   };
+
+  const url = currentVideo?.videoUrl;
+  const parts = url?.split("/");
+  const videourl = parts?.[parts?.length - 1];
+  // console.log(videourl);
+  const vidUrl = `https://www.youtube.com/embed/${videourl}`;
   //TODO: DELETE VIDEO FUNCTIONALITY
   return (
     <Container>
@@ -69,7 +75,7 @@ const Video = () => {
           <iframe
             width="100%"
             height="400"
-            src="https://www.youtube.com/embed/NoxxY2UX9Hg?si=IfjXdeoe4HMWJ8x"
+            src={vidUrl}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -77,9 +83,13 @@ const Video = () => {
             allowFullScreen
           ></iframe>
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>
+          <h3>{currentVideo.title}</h3>
+        </Title>
+
+        <p style={{ color: "white" }}>{currentVideo.description}</p>
         <Details>
-          <h1>{currentVideo.views} views •</h1>
+          <p style={{ color: "white" }}>{currentVideo.views} views •</p>
           <Buttons>
             <Button onClick={handleLike}>
               {currentVideo.likes?.includes(currentUser?.username) ? (
@@ -117,7 +127,7 @@ const Video = () => {
           </ChannelInfo>
         </Channel>
         <Hr />
-        <Comments videoid={videoid} />
+        {/* <Comments videoid={videoid} /> */}
       </Content>
       {/* <Recommendation tags={currentVideo.tags} /> */}
     </Container>
