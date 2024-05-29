@@ -83,9 +83,7 @@ const Video = () => {
             allowFullScreen
           ></iframe>
         </VideoWrapper>
-        <Title>
-          <h3>{currentVideo.title}</h3>
-        </Title>
+        <Title>{currentVideo.title}</Title>
 
         <p style={{ color: "white" }}>{currentVideo.description}</p>
         <Details>

@@ -10,7 +10,8 @@ import {
   likevideo,
   dislikevideo,
   updateVideo,
-  deleteVideo
+  deleteVideo,
+  getProfileVideo
 } from "../controlers/video.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 
@@ -21,9 +22,10 @@ router.post("/addvideo", verifyToken, addVideo);
 router.put("/:videoid", verifyToken, updateVideo);
 router.delete("/:videoid", verifyToken, deleteVideo);
 router.get("/find/:videoid", getVideo);
+router.get("/userprofile",verifyToken, getProfileVideo);
 router.put("/view/:videoid", addView);
 router.get("/trend", trendingvideos);
-router.get("/random", randomvideo);
+router.get("/random",verifyToken, randomvideo);
 router.get("/tags", getvideosByTag);
 router.get("/search", searchvideo);
 router.put("/likevideo/:videoid", verifyToken, likevideo);

@@ -38,9 +38,20 @@ const Navbar = () => {
                   <VideoCallOutlinedIcon />
                 </Button>
               </Link>
-
-              <Avatar src={user.img} />
-              {user.username}
+              <Link
+                to="profile"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "5px",
+                }}
+              >
+                <Avatar src={user.img} />
+                {user.username}
+              </Link>
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>

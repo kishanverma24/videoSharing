@@ -2,7 +2,7 @@ import Video from "../models/Video.js";
 import { createError } from "../utils/error.js";
 
 export const addVideo = async (req, res, next) => {
-  const { title, description, imgUrl, videoUrl,tags } = req.body;
+  const { title, description, imgUrl, videoUrl, tags } = req.body;
   const videoid = `${req.username}${Date.now().toString()}`;
   const newVideo = new Video({
     username: req.username,
@@ -11,11 +11,11 @@ export const addVideo = async (req, res, next) => {
     imgUrl,
     videoUrl,
     videoid,
-    tags
+    tags,
   });
   try {
     const savedVideo = await newVideo.save();
-    res.status(200).json({savedVideo,success:"true"});
+    res.status(200).json({ savedVideo, success: "true" });
   } catch (err) {
     next(err);
   }
@@ -27,7 +27,7 @@ export const updateVideo = async (req, res, next) => {
     const url = req.url;
     const parts = url.split("/");
     const videoid = parts[parts.length - 1];
-    const video = await Video.findOne({videoid:videoid});
+    const video = await Video.findOne({ videoid: videoid });
     if (!video) return next(createError(404, "Video not found!"));
     if (req.username === video.username) {
       const updatedVideo = await Video.findOneAndUpdate(
@@ -38,7 +38,7 @@ export const updateVideo = async (req, res, next) => {
             description,
             imgUrl,
           },
-          $push: { tags: tags }
+          $push: { tags: tags },
         },
         { new: true }
       );
@@ -56,15 +56,31 @@ export const deleteVideo = async (req, res, next) => {
   const parts = url.split("/");
   const videoid = parts[parts.length - 1];
   try {
-    const video = await Video.findById(videoid);
-    if (!video) return next(createError(404, "Video not found!"));
-    if (req.username === video.username) {
-      await Video.findByIdAndDelete(videoid);
-      res.status(200).json("The video has been deleted.");
-    } else {
+    // Check if the video exists
+    const video = await Video.findOne({ videoid });
+    if (!video) {
+      // If video not found, return 404 error
+      return next(createError(404, "Video not found!"));
+    }
+
+    // Check if the logged-in user is the owner of the video
+    if (req.username !== video.username) {
+      // If not the owner, return 403 error
+      console.log(req.username);
+      console.log(video.username);
+      console.log(video);
       return next(createError(403, "You can delete only your video!"));
     }
+
+    // Delete the video
+    await Video.findOneAndDelete({ videoid });
+
+    // Respond with success message
+    res
+      .status(200)
+      .json({ message: "The video has been deleted.", success: true });
   } catch (err) {
+    // Handle any errors
     next(err);
   }
 };
@@ -74,7 +90,17 @@ export const getVideo = async (req, res, next) => {
   const parts = url.split("/");
   const videoid = parts[parts.length - 1];
   try {
-    const video = await Video.find({videoid});
+    const video = await Video.find({ videoid });
+    res.status(200).json(video);
+  } catch (err) {
+    next(err);
+  }
+};
+export const getProfileVideo = async (req, res, next) => {
+  try {
+    const video = await Video.find({ username: req.username });
+    // console.log(video);
+    // console.log(req.username);
     res.status(200).json(video);
   } catch (err) {
     next(err);
@@ -100,7 +126,7 @@ export const addView = async (req, res, next) => {
 
 export const randomvideo = async (req, res, next) => {
   try {
-    const videos = await Video.find()
+    const videos = await Video.find();
     res.status(200).json(videos);
   } catch (err) {
     next(err);
